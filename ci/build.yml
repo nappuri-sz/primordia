@@ -1,0 +1,48 @@
+name: Build and test
+
+on:
+  push:
+    branches: ["port/26.3"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: baseline-26.2
+            revision: b8479660f1fbcc6aa204f63c2d564977db862043
+          - target: port-26.3
+            revision: ''
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.revision }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.6.1'
+      - name: Compile and run the existing test suite
+        run: gradle build --no-daemon --console=plain
+      - name: Preserve test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.target }}
+          path: build/reports/tests/
+          if-no-files-found: ignore
+      - name: Preserve experimental mod
+        uses: actions/upload-artifact@v4
+        with:
+          name: primordia-${{ matrix.target }}-experimental
+          path: build/libs/*.jar
