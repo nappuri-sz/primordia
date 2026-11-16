@@ -3,7 +3,6 @@ package dev.jsz.primordia.client;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
-import org.lwjgl.glfw.GLFW;
 
 /**
  * The mod's key mappings, registered on first use rather than by whoever initialises first.
@@ -24,8 +23,8 @@ public final class PrimordiaKeys {
 	/** Opens the settings screen. Unbound by default; see the note in the Controlify compat layer. */
 	public static final KeyMapping SETTINGS = KeyMappingHelper.registerKeyMapping(new KeyMapping(
 			"key.primordia.settings",
-			InputConstants.Type.KEYSYM,
-			GLFW.GLFW_KEY_UNKNOWN,
+			InputConstants.Type.KEYBOARD,
+			InputConstants.UNKNOWN.getValue(),
 			KeyMapping.Category.MISC));
 
 	private PrimordiaKeys() {

@@ -6,9 +6,11 @@ import dev.jsz.primordia.lab.GenomeLibrary;
 import dev.jsz.primordia.lab.SampleData;
 import dev.jsz.primordia.registry.PrimordiaItems;
 import dev.jsz.primordia.screen.GeneLabScreenHandler;
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringRepresentable;
@@ -22,11 +24,18 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CookingFuel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ResolvableInt;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * The Basic Gene Lab: one machine that carries a tissue sample the whole way to a finished report.
@@ -272,8 +281,16 @@ public class GeneLabBlockEntity extends BlockEntity implements WorldlyContainer,
 
 	private int consumeFuel() {
 		ItemStack fuel = inventory.get(SLOT_FUEL);
-		if (fuel.isEmpty() || level == null) return 0;
-		int value = level.fuelValues().burnDuration(fuel);
+		if (fuel.isEmpty() || !(level instanceof ServerLevel serverLevel)) return 0;
+		// Match vanilla container fuel evaluation, including data-pack context providers.
+		var context = new LootContext.Builder(new LootParams.Builder(serverLevel)
+				.withParameter(LootContextParams.BLOCK_STATE, getBlockState())
+				.withParameter(LootContextParams.BLOCK_ENTITY, this)
+				.withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(getBlockPos()))
+				.withParameter(LootContextParams.CONTAINER, this)
+				.create(LootContextParamSets.CONTAINER_PROCESS)).create(Optional.empty());
+		int value = ResolvableInt.getFromItem(fuel, DataComponents.COOKING_FUEL,
+				CookingFuel::burnTime, context, 0);
 		if (value <= 0) return 0;
 
 		var remainder = fuel.getItem().getCraftingRemainder();

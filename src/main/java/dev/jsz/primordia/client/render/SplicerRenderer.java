@@ -7,6 +7,7 @@ import dev.jsz.primordia.block.SplicerBlock;
 import dev.jsz.primordia.block.SplicerBlockEntity;
 import dev.jsz.primordia.client.model.BbAnimation;
 import dev.jsz.primordia.client.model.BbModel;
+import java.util.List;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -17,8 +18,6 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.List;
 
 /**
  * Draws the splicer, and runs its sampling cycle only while there is something to sample.
@@ -136,7 +135,7 @@ public class SplicerRenderer implements BlockEntityRenderer<SplicerBlockEntity, 
 		poseStack.pushPose();
 		// Rotate about the block's centre, so a machine facing east is the same machine.
 		poseStack.translate(0.5f, 0f, 0.5f);
-		poseStack.mulPose(Axis.YP.rotationDegrees(-state.facing.toYRot()));
+		poseStack.rotate(Axis.YP.rotationDegrees(-state.facing.toYRot()));
 		poseStack.translate(-0.5f, 0f, -0.5f);
 		submitGeometry(poseStack, collector, pose, state.lightCoords,
 				net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);

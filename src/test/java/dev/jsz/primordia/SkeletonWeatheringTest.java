@@ -6,11 +6,9 @@ import dev.jsz.primordia.body.BodyPlan;
 import dev.jsz.primordia.body.BodyPlanBuilder;
 import dev.jsz.primordia.client.render.CreatureRenderer;
 import dev.jsz.primordia.genome.Genome;
+import java.util.Random;
 import org.joml.Vector3f;
 import org.junit.jupiter.api.Test;
-
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -29,7 +27,7 @@ class SkeletonWeatheringTest {
 	private static PoseStack.Pose carcassPose(float carcassLift, float hipHeight) {
 		PoseStack stack = new PoseStack();
 		stack.translate(0f, carcassLift, 0f);
-		stack.mulPose(Axis.ZP.rotationDegrees(180f));
+		stack.rotate(Axis.ZP.rotationDegrees(180f));
 		stack.translate(0f, -hipHeight, 0f);
 		return stack.last();
 	}
@@ -75,14 +73,14 @@ class SkeletonWeatheringTest {
 
 		PoseStack full = new PoseStack();
 		full.translate(0f, 0.2f, 0f);
-		full.mulPose(Axis.ZP.rotationDegrees(180f));
+		full.rotate(Axis.ZP.rotationDegrees(180f));
 		full.translate(0f, -plan.hipHeight, 0f);
 		float[] adultRange = CreatureRenderer.poseSpaceHeightRange(plan, full.last(), scratch);
 
 		PoseStack juvenile = new PoseStack();
 		juvenile.scale(0.4f, 0.4f, 0.4f);
 		juvenile.translate(0f, 0.2f, 0f);
-		juvenile.mulPose(Axis.ZP.rotationDegrees(180f));
+		juvenile.rotate(Axis.ZP.rotationDegrees(180f));
 		juvenile.translate(0f, -plan.hipHeight, 0f);
 		float[] juvenileRange = CreatureRenderer.poseSpaceHeightRange(plan, juvenile.last(), scratch);
 

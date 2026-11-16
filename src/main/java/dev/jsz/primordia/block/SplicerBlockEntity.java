@@ -3,19 +3,19 @@ package dev.jsz.primordia.block;
 import dev.jsz.primordia.registry.PrimordiaBlockEntities;
 import dev.jsz.primordia.splice.SpliceBranch;
 import dev.jsz.primordia.splice.Splicing;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-
-import java.util.UUID;
 
 /**
  * The bench that runs a splice, over time.
@@ -254,7 +254,7 @@ public class SplicerBlockEntity extends BlockEntity
 			output.set(0, serum);
 			setChanged();
 		} else if (!player.getInventory().add(serum)) {
-			player.drop(serum, false);
+			player.drop(serum, false, Prediction.SERVER_ONLY);
 		}
 		player.sendSystemMessage(Component.literal(running.title + " isolated."));
 		level.playSound(null, getBlockPos(), SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS,

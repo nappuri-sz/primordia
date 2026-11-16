@@ -49,9 +49,9 @@ public class CreaturePreviewRenderer extends PictureInPictureRenderer<CreaturePr
 		// own entity plates fix this in the caller's rotation quaternion; there is no caller here, so
 		// the half-turn about X lives with the rest of the orientation. Composed with the base's
 		// scale it reproduces the Y-negated scale this drawing used before the port.
-		poseStack.mulPose(Axis.XP.rotationDegrees(180f));
-		poseStack.mulPose(Axis.XP.rotationDegrees(PITCH_DEGREES));
-		poseStack.mulPose(Axis.YP.rotation(state.spin()));
+		poseStack.rotate(Axis.XP.rotationDegrees(180f));
+		poseStack.rotate(Axis.XP.rotationDegrees(PITCH_DEGREES));
+		poseStack.rotate(Axis.YP.rotation(state.spin()));
 		// Turn the creature about its own middle rather than about the corner of its bounds.
 		poseStack.translate(-state.midX(), -state.midY(), -state.midZ());
 

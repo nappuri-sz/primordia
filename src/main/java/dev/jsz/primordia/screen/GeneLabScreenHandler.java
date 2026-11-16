@@ -2,16 +2,17 @@ package dev.jsz.primordia.screen;
 
 import dev.jsz.primordia.block.GeneLabBlockEntity;
 import dev.jsz.primordia.registry.PrimordiaScreenHandlers;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.inventory.SimpleContainerData;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
 
 /**
  * The Basic Gene Lab's container: the sample on top, its two fuels beneath, the report to the side.
@@ -187,7 +188,7 @@ public class GeneLabScreenHandler extends AbstractContainerMenu {
 				target = GeneLabBlockEntity.SLOT_SAMPLE;
 			} else if (stack.is(Items.REDSTONE)) {
 				target = GeneLabBlockEntity.SLOT_REDSTONE;
-			} else if (player.level().fuelValues().burnDuration(stack) > 0) {
+			} else if (stack.has(DataComponents.COOKING_FUEL)) {
 				target = GeneLabBlockEntity.SLOT_FUEL;
 			} else {
 				return ItemStack.EMPTY;

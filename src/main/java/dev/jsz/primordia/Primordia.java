@@ -1,10 +1,9 @@
 package dev.jsz.primordia;
 
-import dev.jsz.primordia.editor.EditorServer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import dev.jsz.primordia.command.PrimordiaCommands;
 import dev.jsz.primordia.ecology.VanillaInteractions;
 import dev.jsz.primordia.ecology.region.EcologyTicker;
+import dev.jsz.primordia.editor.EditorServer;
 import dev.jsz.primordia.lab.NameLineagePayload;
 import dev.jsz.primordia.lab.SpawnSpeciesPayload;
 import dev.jsz.primordia.registry.PrimordiaBlockEntities;
@@ -15,7 +14,9 @@ import dev.jsz.primordia.registry.PrimordiaItems;
 import dev.jsz.primordia.registry.PrimordiaScreenHandlers;
 import dev.jsz.primordia.registry.PrimordiaSounds;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Prediction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,7 +92,7 @@ public class Primordia implements ModInitializer {
 				net.minecraft.world.item.ItemStack guide =
 						new net.minecraft.world.item.ItemStack(PrimordiaItems.FIELD_GUIDE);
 				if (!player.getInventory().add(guide)) {
-					player.drop(guide, false);
+					player.drop(guide, false, Prediction.SERVER_ONLY);
 				}
 			}
 		});
@@ -117,7 +118,7 @@ public class Primordia implements ModInitializer {
 			if (!hasGuide) {
 				net.minecraft.world.item.ItemStack guide = new net.minecraft.world.item.ItemStack(PrimordiaItems.FIELD_GUIDE);
 				if (!newPlayer.getInventory().add(guide)) {
-					newPlayer.drop(guide, false);
+					newPlayer.drop(guide, false, Prediction.SERVER_ONLY);
 				}
 			}
 		});
