@@ -117,7 +117,7 @@ dependencies {
 		// The module is published once with a variant per loader, and none of them is the default,
 		// so the platform has to be named or resolution has nothing to pick.
 		capabilities {
-			requireCapability "dev.isxander:${project.minecraft_version}-fabric"
+			requireCapability 'dev.isxander:controlify-fabric'
 		}
 		transitive = false
 	}

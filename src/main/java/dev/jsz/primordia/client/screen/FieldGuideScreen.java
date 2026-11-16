@@ -1,18 +1,23 @@
 package dev.jsz.primordia.client.screen;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import dev.jsz.primordia.Primordia;
+import dev.jsz.primordia.client.render.CreaturePreview;
+import dev.jsz.primordia.entity.TamingPreference;
 import dev.jsz.primordia.genome.Gene;
 import dev.jsz.primordia.genome.Genome;
 import dev.jsz.primordia.lab.DecodeAccuracy;
 import dev.jsz.primordia.lab.GuideChapters;
 import dev.jsz.primordia.lab.GuideData;
-import dev.jsz.primordia.lab.SpawnSpeciesPayload;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import dev.jsz.primordia.lab.NameLineagePayload;
 import dev.jsz.primordia.lab.Phylogeny;
-import dev.jsz.primordia.util.MathX;
-import dev.jsz.primordia.entity.TamingPreference;
-import dev.jsz.primordia.client.render.CreaturePreview;
+import dev.jsz.primordia.lab.SpawnSpeciesPayload;
 import dev.jsz.primordia.splice.SpliceBranch;
+import dev.jsz.primordia.util.MathX;
+import java.util.ArrayList;
+import java.util.List;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
@@ -20,19 +25,14 @@ import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.server.permissions.Permissions;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.ChatFormatting;
-import dev.jsz.primordia.Primordia;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.permissions.Permissions;
 import net.minecraft.util.Mth;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * Renders the field guide: the mod's manual, plus everything the owner has filed.
@@ -1199,27 +1199,27 @@ public class FieldGuideScreen extends Screen {
 		// name being written and escape would shut the book rather than cancel the edit.
 		if (naming) {
 			switch (keyCode) {
-				case org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE -> {
+				case InputConstants.KEY_ESCAPE -> {
 					naming = false;
 					nameBuffer = "";
 				}
-				case org.lwjgl.glfw.GLFW.GLFW_KEY_BACKSPACE -> {
+				case InputConstants.KEY_BACKSPACE -> {
 					if (!nameBuffer.isEmpty()) {
 						nameBuffer = nameBuffer.substring(0, nameBuffer.length() - 1);
 					}
 				}
-				case org.lwjgl.glfw.GLFW.GLFW_KEY_ENTER, org.lwjgl.glfw.GLFW.GLFW_KEY_KP_ENTER ->
+				case InputConstants.KEY_RETURN, InputConstants.KEY_NUMPADENTER ->
 						commitName();
 				default -> {
 				}
 			}
 			return true;
 		}
-		if (keyCode == org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT) {
+		if (keyCode == InputConstants.KEY_LEFT) {
 			turn(-1);
 			return true;
 		}
-		if (keyCode == org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT) {
+		if (keyCode == InputConstants.KEY_RIGHT) {
 			turn(1);
 			return true;
 		}

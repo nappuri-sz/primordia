@@ -1,3 +1,9 @@
+> **Experimental Minecraft 26.3 port by nappuri-sz.** This fork is based on
+> [Jacob Szczepaniak's Primordia](https://github.com/Zeyphers/Primordia), commit
+> `b8479660f1fbcc6aa204f63c2d564977db862043`, and retains its CC BY-NC 4.0 license.
+> It is not an official release. See [PORTING.md](PORTING.md) for changes and validation.
+> The upstream documentation below describes the original 26.2 release.
+
 ![Primordia](https://cdn.modrinth.com/data/cached_images/5b3d6c167245848de481471729e64fb9cb9a7e2f.png)
 
 <p align="center">

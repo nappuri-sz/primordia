@@ -56,6 +56,7 @@ public class PrimordiaClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		dev.jsz.primordia.client.PrimordiaKeys.initialize();
 		// The editor's HTTP listener runs on a thread the JDK creates itself and does not mark as a
 		// daemon, so anything left listening keeps the JVM alive after the window closes and the
 		// shutdown watchdog eventually files a crash report. This is the hook that actually matters

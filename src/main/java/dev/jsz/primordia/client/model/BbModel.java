@@ -7,16 +7,15 @@ import com.google.gson.JsonParser;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.jsz.primordia.Primordia;
-import net.minecraft.client.Minecraft;
-import net.minecraft.resources.Identifier;
-import org.joml.Matrix3f;
-import org.joml.Vector3f;
-
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.Identifier;
+import org.joml.Matrix3f;
+import org.joml.Vector3f;
 
 /**
  * A Blockbench model, loaded as it was authored.
@@ -337,7 +336,7 @@ public final class BbModel {
 			// About the pivot, which is what a pivot is for: translate the pivot to the origin,
 			// turn, and put it back.
 			poseStack.translate(bone.pivot.x, bone.pivot.y, bone.pivot.z);
-			poseStack.mulPose(new org.joml.Quaternionf().rotationXYZ(
+			poseStack.rotate(new org.joml.Quaternionf().rotationXYZ(
 					(float) Math.toRadians(bone.rotation.x),
 					(float) Math.toRadians(bone.rotation.y),
 					(float) Math.toRadians(bone.rotation.z)));

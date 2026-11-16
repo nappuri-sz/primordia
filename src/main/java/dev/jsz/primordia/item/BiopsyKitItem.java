@@ -5,21 +5,21 @@ import dev.jsz.primordia.genome.Genome;
 import dev.jsz.primordia.lab.GenomeLibrary;
 import dev.jsz.primordia.lab.SampleData;
 import dev.jsz.primordia.registry.PrimordiaItems;
+import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Prediction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.ChatFormatting;
-import net.minecraft.world.InteractionHand;
-
-import java.util.function.Consumer;
 
 public class BiopsyKitItem extends Item {
 
@@ -69,7 +69,7 @@ public class BiopsyKitItem extends Item {
 		ItemStack sample = SampleData.of(genome, creature.level().getGameTime())
 				.onto(PrimordiaItems.TISSUE_SAMPLE);
 		if (!player.getInventory().add(sample)) {
-			player.drop(sample, false);
+			player.drop(sample, false, Prediction.SERVER_ONLY);
 		}
 
 		stack.hurtAndBreak(1, player, hand);

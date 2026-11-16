@@ -12,7 +12,7 @@ import net.minecraft.sounds.SoundSource;
  * One creature call, on its way to the sound engine.
  * <p>
  * A hand-written {@link SoundInstance} rather than a {@code SimpleSoundInstance}, because the whole
- * point is to skip the registry lookup. {@link #resolve} normally goes to {@code sounds.json} to
+ * point is to skip the registry lookup. {@link #getOrResolve} normally goes to {@code sounds.json} to
  * find out which files an event may play; here it answers out of the instance itself, since the
  * "file" was made a moment ago and was never in a resource pack. Everything the engine does after
  * that — placing it in the world, attenuating it, putting it on the players' sound sliders, cutting
@@ -48,7 +48,12 @@ public final class ProceduralVoiceInstance implements SoundInstance {
 	}
 
 	@Override
-	public WeighedSoundEvents resolve(SoundManager manager) {
+	public WeighedSoundEvents getOrResolve(SoundManager manager) {
+		return events;
+	}
+
+	@Override
+	public WeighedSoundEvents getSoundEvent() {
 		return events;
 	}
 

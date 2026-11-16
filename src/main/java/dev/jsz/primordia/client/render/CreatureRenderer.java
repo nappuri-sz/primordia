@@ -1,5 +1,8 @@
 package dev.jsz.primordia.client.render;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import dev.jsz.primordia.Primordia;
 import dev.jsz.primordia.anim.AnimationContext;
 import dev.jsz.primordia.anim.CreatureAnimator;
@@ -17,9 +20,6 @@ import dev.jsz.primordia.mesh.LodTier;
 import dev.jsz.primordia.mesh.MeshData;
 import dev.jsz.primordia.mesh.SkinnedMesh;
 import dev.jsz.primordia.util.MathX;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -166,7 +166,7 @@ public class CreatureRenderer extends EntityRenderer<CreatureEntity, CreatureRen
 		poseStack.pushPose();
 		// Model space is built facing +Z; Minecraft yaw 0 also faces +Z but increases toward -X,
 		// so the model rotates by the negated yaw.
-		poseStack.mulPose(Axis.YP.rotationDegrees(-state.bodyYawDeg));
+		poseStack.rotate(Axis.YP.rotationDegrees(-state.bodyYawDeg));
 		// Outermost, so every measurement below it stays in model units and shrinks with the body. A
 		// juvenile is the same animal drawn smaller — there is no separate child model, which is the
 		// only way this could work for creatures whose shape is not known until they are born.
@@ -178,14 +178,14 @@ public class CreatureRenderer extends EntityRenderer<CreatureEntity, CreatureRen
 		// float climb = state.climbBlend;
 		// if (climb > 0.01f) {
 		//     poseStack.translate(0f, 0f, (state.halfWidth + plan.hipHeight * 0.5f) * climb);
-		//     poseStack.mulPose(Axis.XP.rotationDegrees(-90f * climb));
+		//     poseStack.rotate(Axis.XP.rotationDegrees(-90f * climb));
 		//     poseStack.translate(0f, plan.hipHeight * 0.5f * climb, 0f);
 		// }
 		if (state.carcass) {
 			float sinkFactor = PrimordiaConfig.get().carcassSinkFactor;
 			float carcassLift = carcassLift(plan, sinkFactor);
 			poseStack.translate(0f, carcassLift, 0f);
-			poseStack.mulPose(Axis.ZP.rotationDegrees(180f));
+			poseStack.rotate(Axis.ZP.rotationDegrees(180f));
 			poseStack.translate(0f, -plan.hipHeight, 0f);
 		}
 
