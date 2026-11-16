@@ -39,7 +39,14 @@ Local validation on macOS arm64, Java 25.0.1 and Gradle 9.6.1 (2026-11-16):
 - Unmodified upstream 26.2 baseline: build successful, 265 tests, 0 failures/errors/skips.
 - 26.3 port: build successful, 265 tests, 0 failures/errors/skips; access widener validated.
 - SkeletonWeatheringTest uses the renamed quaternion API; assertions remain unchanged.
-- Client startup: in progress; first launch needs Minecraft assets.
+- First client launch exposed late settings-key registration without Controlify; fixed by
+  forcing PrimordiaKeys initialization inside the client entrypoint.
+- Repeated build: all 265 tests pass. Repeated client launch initializes Primordia,
+  starts the sound engine and creates texture atlases without the previous crash.
+- The development client remained running after startup. Visual/world testing is unverified:
+  the local UI automation tool cannot attach to its Java window.
+- Optional integrations are compile-time checked only; they were absent from this client run.
+- Artifact SHA-256: `b6599e38b6cdc0bdf3ed204d09591f0fe9ddea8701480f1bda2748ae46dd5d7d`.
 
 The CI file is only a template, not an executed GitHub Actions check.
 No claim is made about live rendering, world persistence, multiplayer or interoperability

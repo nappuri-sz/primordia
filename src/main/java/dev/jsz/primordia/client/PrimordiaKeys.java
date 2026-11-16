@@ -10,7 +10,7 @@ import net.minecraft.client.KeyMapping;
  * This exists because two client initialisers want the settings key and Fabric does not order them:
  * {@link dev.jsz.primordia.PrimordiaClient} registers the tick handler that acts on it, and
  * Controlify's entrypoint — which is a {@code client} entrypoint of its own — asks for it so a
- * controller button can be bound to the same action. Held in {@link PrimordiaClient} as a field
+ * controller button can be bound to the same action. Held in {@link dev.jsz.primordia.PrimordiaClient} as a field
  * assigned during init, it was null for the compat layer whenever Fabric happened to run Controlify
  * first, which left a binding a player could see and bind and which then did nothing.
  * <p>
@@ -26,6 +26,10 @@ public final class PrimordiaKeys {
 			InputConstants.Type.KEYBOARD,
 			InputConstants.UNKNOWN.getValue(),
 			KeyMapping.Category.MISC));
+
+	/** Force registration during client init even when no optional integration accesses the key. */
+	public static void initialize() {
+	}
 
 	private PrimordiaKeys() {
 	}
